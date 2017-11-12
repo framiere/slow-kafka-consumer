@@ -16,8 +16,8 @@ public class SlowKafkaConsumer {
     public static class CommandLine {
         @Parameter(names = "--bootstrap-servers", required = true)
         private String bootstrapServers = "localhost:9092";
-        @Parameter(names = "--group-id", required = true)
-        private String groupId = "test";
+        @Parameter(names = "--group", required = true)
+        private String group = "slow-consumer";
         @Parameter(names = "--topics", required = true)
         private List<String> topics;
         @Parameter(names = "--timebetween-batches")
@@ -29,7 +29,7 @@ public class SlowKafkaConsumer {
         public String toString() {
             return "CommandLine{" +
                     "bootstrapServers='" + bootstrapServers + '\'' +
-                    ", groupId='" + groupId + '\'' +
+                    ", groupId='" + group + '\'' +
                     ", topics=" + topics +
                     ", timeBetweenBatches=" + maxWaitTimeBetweenBatches +
                     ", timeBetweenBatchesUnit=" + maxWaitTimeBetweenBatchesUnit +
@@ -47,7 +47,7 @@ public class SlowKafkaConsumer {
         System.out.println(commandLine.toString());
         Properties props = new Properties();
         props.put("bootstrap.servers", commandLine.bootstrapServers);
-        props.put("group.id", commandLine.groupId);
+        props.put("group.id", commandLine.group);
         props.put("enable.auto.commit", "false");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
