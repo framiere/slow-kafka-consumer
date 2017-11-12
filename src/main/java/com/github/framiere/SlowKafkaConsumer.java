@@ -21,9 +21,9 @@ public class SlowKafkaConsumer {
         @Parameter(names = "--topics", required = true)
         private List<String> topics;
         @Parameter(names = "--timebetween-batches")
-        private Integer maxWaitTimeBetweenBatches = 30;
+        private Integer waitTimeBetweenBatches = 30;
         @Parameter(names = "--timebetween-batches-unit")
-        private TimeUnit maxWaitTimeBetweenBatchesUnit = TimeUnit.SECONDS;
+        private TimeUnit waitTimeBetweenBatchesUnit = TimeUnit.SECONDS;
 
         @Override
         public String toString() {
@@ -31,8 +31,8 @@ public class SlowKafkaConsumer {
                     "bootstrapServers='" + bootstrapServers + '\'' +
                     ", groupId='" + group + '\'' +
                     ", topics=" + topics +
-                    ", timeBetweenBatches=" + maxWaitTimeBetweenBatches +
-                    ", timeBetweenBatchesUnit=" + maxWaitTimeBetweenBatchesUnit +
+                    ", waitTimeBetweenBatches=" + waitTimeBetweenBatches +
+                    ", waitTimeBetweenBatchesUnit=" + waitTimeBetweenBatchesUnit +
                     '}';
         }
     }
@@ -58,9 +58,8 @@ public class SlowKafkaConsumer {
             for (ConsumerRecord<String, String> record : records) {
                 System.out.printf("offset=%d, key=%s, value=%s", record.offset(), record.key(), record.value());
             }
-            int timeout = random.nextInt(commandLine.maxWaitTimeBetweenBatches);
-            System.out.println("Waiting for " + timeout + " " + commandLine.maxWaitTimeBetweenBatchesUnit);
-            commandLine.maxWaitTimeBetweenBatchesUnit.sleep(timeout);
+            System.out.println("Waiting for " + commandLine.waitTimeBetweenBatches + " " + commandLine.waitTimeBetweenBatchesUnit);
+            commandLine.waitTimeBetweenBatchesUnit.sleep(commandLine.waitTimeBetweenBatches);
             consumer.commitSync();
         }
     }
