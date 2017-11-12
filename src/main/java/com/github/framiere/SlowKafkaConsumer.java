@@ -56,9 +56,11 @@ public class SlowKafkaConsumer {
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {
-                System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+                System.out.printf("offset= %d, key=%s, value=%s%n", record.offset(), record.key(), record.value());
             }
-            commandLine.maxWaitTimeBetweenBatchesUnit.sleep(random.nextInt(commandLine.maxWaitTimeBetweenBatches));
+            int timeout = random.nextInt(commandLine.maxWaitTimeBetweenBatches);
+            System.out.println("Waiting for " + timeout + " " + commandLine.maxWaitTimeBetweenBatchesUnit);
+            commandLine.maxWaitTimeBetweenBatchesUnit.sleep(timeout);
             consumer.commitSync();
         }
     }
