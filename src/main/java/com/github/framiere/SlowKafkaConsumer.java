@@ -21,7 +21,7 @@ public class SlowKafkaConsumer {
         @Parameter(names = "--topics", required = true)
         private List<String> topics;
         @Parameter(names = "--timebetween-batches")
-        private Integer maxWaitTimeBetweenBatches = 10;
+        private Integer maxWaitTimeBetweenBatches = 30;
         @Parameter(names = "--timebetween-batches-unit")
         private TimeUnit maxWaitTimeBetweenBatchesUnit = TimeUnit.SECONDS;
 
